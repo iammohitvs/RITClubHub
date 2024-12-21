@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 
+import GlobalLayout from "./components/layouts/GlobalLayout";
+
 import HomePage from "./pages/HomePage";
 
 import StudentSignup from "./pages/auth/StudentSignup";
@@ -24,32 +26,34 @@ import UserProfilePage from "./pages/user/UserProfilePage";
 createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
         <Routes>
-            {/* Home Pages */}
-            <Route path="/" element={<HomePage />} />
+            <Route element={<GlobalLayout />}>
+                {/* Home Pages */}
+                <Route index element={<HomePage />} />
 
-            {/* Auth Pages */}
-            <Route path="/signup/student" element={<StudentSignup />} />
-            <Route path="/signup/club" element={<ClubSignup />} />
-            <Route path="/login/student" element={<StudentLogin />} />
-            <Route path="/login/club" element={<ClubLogin />} />
+                {/* Auth Pages */}
+                <Route path="/signup/student" element={<StudentSignup />} />
+                <Route path="/signup/club" element={<ClubSignup />} />
+                <Route path="/login/student" element={<StudentLogin />} />
+                <Route path="/login/club" element={<ClubLogin />} />
 
-            {/* Events Pages */}
-            <Route path="events">
-                <Route index element={<EventsPage />} />
-                <Route path="upcoming" element={<UpcomingEvents />} />
-                <Route path="completed" element={<CompletedEvents />} />
-                <Route path="calender" element={<EventsCalender />} />
-                <Route path="event/:eventid" element={<SpeceficEvent />} />
+                {/* Events Pages */}
+                <Route path="events">
+                    <Route index element={<EventsPage />} />
+                    <Route path="upcoming" element={<UpcomingEvents />} />
+                    <Route path="completed" element={<CompletedEvents />} />
+                    <Route path="calender" element={<EventsCalender />} />
+                    <Route path="event/:eventid" element={<SpeceficEvent />} />
+                </Route>
+
+                {/* Clubs Pages */}
+                <Route path="clubs">
+                    <Route index element={<ClubsPage />} />
+                    <Route path=":clubid" element={<SpeceficClub />} />
+                </Route>
+
+                {/* User Pages */}
+                <Route path="profile" element={<UserProfilePage />} />
             </Route>
-
-            {/* Clubs Pages */}
-            <Route path="clubs">
-                <Route index element={<ClubsPage />} />
-                <Route path=":clubid" element={<SpeceficClub />} />
-            </Route>
-
-            {/* User Pages */}
-            <Route path="profile" element={<UserProfilePage />} />
         </Routes>
     </BrowserRouter>
 );
