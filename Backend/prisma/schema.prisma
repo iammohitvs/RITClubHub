@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Club {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  desc       String
+  members    String
+  accolades  String?
+  cnumber    String
+  cemail     String
+  ratings    Float?
+  dept       String?
+  tags       String[]
+  events     Event[]
+  ratingsRel Rating[] @relation("ClubRatings")
+}
+
+model Event {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  desc       String
+  prize      String?
+  location   String
+  date       DateTime
+  ratings    Float?
+  ratingsRel Rating[] @relation("EventRatings")
+  Club       Club?    @relation(fields: [clubId], references: [id])
+  clubId     Int?
+}
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  password  String
+  type      String
+  ratings   Rating[] @relation("AccountRatings")
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rating    Float?
+  clubId    Int?
+  eventId   Int?
+  accountId Int?
+
+  club    Club?    @relation("ClubRatings", fields: [clubId], references: [id], onDelete: Cascade)
+  event   Event?   @relation("EventRatings", fields: [eventId], references: [id], onDelete: Cascade)
+  account Account? @relation("AccountRatings", fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([clubId, eventId, accountId]) // Ensure unique combination of club, event, and account
+}
