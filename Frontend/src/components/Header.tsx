@@ -13,7 +13,7 @@ import UserAvatar from "./UserAvatar";
 
 const Header = () => {
     return (
-        <div className="flex flex-row justify-between shadow-gray-500 shadow-sm px-5 py-3 items-center">
+        <div className="fixed w-full -mt-[100px] z-10 flex flex-row justify-between px-5 py-3 items-center bg-background">
             <Logo />
 
             <NavigationMenu>

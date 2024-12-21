@@ -1,0 +1,47 @@
+RitClubHub
+student / club roles
+ADMIN
+-moderation
+
+
+CLUB
+-clubs provide info about the club and setup their stuff
+-release info about upcoming events, locations etc
+-can see all ratings 
+-
+
+STUDENTS
+-students give their interests/skills on signup, and then are suggested clubs based on it 
+-can also access all the clubs info, links, filter them etc
+-main home page shows upcoming events from clubs etc
+-can talk to chatbot 
+-calendar
+-can rate on both the clubs and the events, requires login for club rating, no login for event rating 
+-can see comments/ratings about clubs/events 
+
+
+Pages:
+    Home:
+        /
+
+    Auth:
+        /login/club
+        /signup/club
+
+        /login/student
+        /signup/student
+    
+    Events:
+        /events - shows upcoming, completed, for you, and calender alert
+        /events/upcoming
+        /events/completed
+        /events/calender
+        /events/event/:eventid
+
+    Clubs:
+        /clubs - shows clubs based on tags, and for you
+        /clubs/:clubid
+
+    User:
+        /profile
+        /new-event - only if a club
