@@ -10,6 +10,7 @@ import {
 import { NavLink } from "react-router";
 import { NAVIGATION } from "@/lib/constants";
 import UserAvatar from "./UserAvatar";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Header = () => {
     return (
@@ -34,7 +35,10 @@ const Header = () => {
                 </NavigationMenuList>
             </NavigationMenu>
 
-            <UserAvatar />
+            <div className="flex flex-row gap-2 items-center">
+                <ThemeToggle />
+                <UserAvatar />
+            </div>
         </div>
     );
 };

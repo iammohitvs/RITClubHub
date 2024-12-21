@@ -7,7 +7,7 @@ import React from "react";
 
 const HomePage = () => {
     return (
-        <section id="home" className="py-[100px] flex flex-col gap-20 items-center">
+        <section id="home" className="py-[100px] flex flex-col gap-20 items-center px-2">
             <div
                 aria-hidden="true"
                 className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

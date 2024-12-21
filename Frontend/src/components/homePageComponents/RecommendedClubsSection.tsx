@@ -10,7 +10,7 @@ import {
 
 const RecommendedClubsSection = () => {
     return (
-        <Card className="border-none w-[1000px] bg-zinc-800">
+        <Card className="border-none w-[1000px] dark:bg-zinc-900">
             <CardHeader>
                 <CardTitle>Recommended Clubs</CardTitle>
                 <CardDescription>
