@@ -16,3 +16,5 @@ export const NAVIGATION = [
         path: "/events/calender",
     },
 ];
+
+export const PORT = "http://localhost:3000/api";

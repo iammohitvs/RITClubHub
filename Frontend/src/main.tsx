@@ -24,59 +24,74 @@ import SpeceficClub from "./pages/clubs/SpeceficClub";
 import UserProfilePage from "./pages/user/UserProfilePage";
 import { ThemeProvider } from "./providers/ThemeProvider";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <ThemeProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route element={<GlobalLayout />}>
-                        {/* Home Pages */}
-                        <Route index element={<HomePage />} />
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route element={<GlobalLayout />}>
+                            {/* Home Pages */}
+                            <Route index element={<HomePage />} />
 
-                        {/* Auth Pages */}
-                        <Route
-                            path="/signup/student"
-                            element={<StudentSignup />}
-                        />
-                        <Route path="/signup/club" element={<ClubSignup />} />
-                        <Route
-                            path="/login/student"
-                            element={<StudentLogin />}
-                        />
-                        <Route path="/login/club" element={<ClubLogin />} />
+                            {/* Auth Pages */}
+                            <Route
+                                path="/signup/student"
+                                element={<StudentSignup />}
+                            />
+                            <Route
+                                path="/signup/club"
+                                element={<ClubSignup />}
+                            />
+                            <Route
+                                path="/login/student"
+                                element={<StudentLogin />}
+                            />
+                            <Route path="/login/club" element={<ClubLogin />} />
 
-                        {/* Events Pages */}
-                        <Route path="events">
-                            <Route index element={<EventsPage />} />
+                            {/* Events Pages */}
+                            <Route path="events">
+                                <Route index element={<EventsPage />} />
+                                <Route
+                                    path="upcoming"
+                                    element={<UpcomingEvents />}
+                                />
+                                <Route
+                                    path="completed"
+                                    element={<CompletedEvents />}
+                                />
+                                <Route
+                                    path="calender"
+                                    element={<EventsCalender />}
+                                />
+                                <Route
+                                    path="event/:eventid"
+                                    element={<SpeceficEvent />}
+                                />
+                            </Route>
+
+                            {/* Clubs Pages */}
+                            <Route path="clubs">
+                                <Route index element={<ClubsPage />} />
+                                <Route
+                                    path=":clubid"
+                                    element={<SpeceficClub />}
+                                />
+                            </Route>
+
+                            {/* User Pages */}
                             <Route
-                                path="upcoming"
-                                element={<UpcomingEvents />}
-                            />
-                            <Route
-                                path="completed"
-                                element={<CompletedEvents />}
-                            />
-                            <Route
-                                path="calender"
-                                element={<EventsCalender />}
-                            />
-                            <Route
-                                path="event/:eventid"
-                                element={<SpeceficEvent />}
+                                path="profile"
+                                element={<UserProfilePage />}
                             />
                         </Route>
-
-                        {/* Clubs Pages */}
-                        <Route path="clubs">
-                            <Route index element={<ClubsPage />} />
-                            <Route path=":clubid" element={<SpeceficClub />} />
-                        </Route>
-
-                        {/* User Pages */}
-                        <Route path="profile" element={<UserProfilePage />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </ThemeProvider>
+                    </Routes>
+                </BrowserRouter>
+            </ThemeProvider>
+        </QueryClientProvider>
     </StrictMode>
 );

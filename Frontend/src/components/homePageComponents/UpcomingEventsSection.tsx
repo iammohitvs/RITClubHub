@@ -10,8 +10,16 @@ import {
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { NavLink } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getUpcomingEvents } from "@/services/events";
+import EventCard from "./EventCard";
 
 const UpcomingEventsSection = () => {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["events"],
+        queryFn: async () => await getUpcomingEvents(),
+    });
+
     return (
         <Card className="border-none w-[1000px] dark:bg-zinc-900">
             <CardHeader>
@@ -20,7 +28,19 @@ const UpcomingEventsSection = () => {
                     All upcoming events hosted by RIT clubs
                 </CardDescription>
             </CardHeader>
-            <CardContent>events...</CardContent>
+            <CardContent className="flex flex-row flex-wrap gap-2">
+                {isLoading && <p>Loading...</p>}
+                {isError && (
+                    <p className="text-red-600">Error occured. Reload Page.</p>
+                )}
+                {data && data.length === 0 && <p>No upcoming events</p>}
+                {data &&
+                    data
+                        .slice(0, 5)
+                        .map((event) => (
+                            <EventCard event={event} key={event.id} />
+                        ))}
+            </CardContent>
             <CardFooter>
                 <NavLink to="/events/upcoming">
                     <Button
