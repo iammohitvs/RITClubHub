@@ -91,3 +91,30 @@ export const getRatingsForEvent = async (c: Context) => {
     return c.json({ error: 'Error fetching ratings for the event' }, 500);
   }
 };
+
+// Delete ratings by clubId or eventId
+export const deleteRatingsByClubOrEvent = async (c: Context) => {
+  const { clubId, eventId } = c.req.param();
+
+  try {
+    if (clubId) {
+      await prisma.rating.deleteMany({
+        where: {
+          clubId: Number(clubId),
+        },
+      });
+    } else if (eventId) {
+      await prisma.rating.deleteMany({
+        where: {
+          eventId: Number(eventId),
+        },
+      });
+    } else {
+      return c.json({ error: 'clubId or eventId must be provided' }, 400);
+    }
+
+    return c.json({ message: 'Ratings deleted successfully' });
+  } catch (error) {
+    return c.json({ error: 'Error deleting ratings' }, 500);
+  }
+};

@@ -34,3 +34,20 @@ export const getClubById = async (c: Context) => {
     return c.json({ error: 'Error fetching club details' }, 500);
   }
 };
+
+// Update club attributes
+export const updateClub = async (c: Context) => {
+  const { id } = c.req.param();
+  const data = await c.req.json();
+
+  try {
+    const updatedClub = await prisma.club.update({
+      where: { id: Number(id) },
+      data,
+    });
+
+    return c.json(updatedClub);
+  } catch (error) {
+    return c.json({ error: 'Error updating club' }, 500);
+  }
+};

@@ -96,3 +96,35 @@ export const getEventsByMonth = async (c: Context) => {
     return c.json({ error: 'Error fetching events by month' }, 500);
   }
 };
+
+// Update event attributes
+export const updateEvent = async (c: Context) => {
+  const { id } = c.req.param();
+  const data = await c.req.json();
+
+  try {
+    const updatedEvent = await prisma.event.update({
+      where: { id: Number(id) },
+      data,
+    });
+
+    return c.json(updatedEvent);
+  } catch (error) {
+    return c.json({ error: 'Error updating event' }, 500);
+  }
+};
+
+// Delete an event
+export const deleteEvent = async (c: Context) => {
+  const { id } = c.req.param();
+
+  try {
+    await prisma.event.delete({
+      where: { id: Number(id) },
+    });
+
+    return c.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    return c.json({ error: 'Error deleting event' }, 500);
+  }
+};

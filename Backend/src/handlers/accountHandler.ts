@@ -29,4 +29,31 @@ export const getAllAccounts = async (c: Context) => {
   }
 };
 
+// Update account attributes
+export const updateAccount = async (c: Context) => {
+  const { id } = c.req.param();
+  const data = await c.req.json();
 
+  try {
+    const updatedAccount = await prisma.account.update({
+      where: { id: Number(id) },
+      data,
+    });
+
+    return c.json(updatedAccount);
+  } catch (error) {
+    return c.json({ error: 'Error updating account' }, 500);
+  }
+};
+
+// Delete account
+export const deleteAccount = async (c: Context) => {
+  const { id } = c.req.param();
+
+  try {
+    await prisma.account.delete({ where: { id: Number(id) } });
+    return c.json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    return c.json({ error: 'Error deleting account' }, 500);
+  }
+};
