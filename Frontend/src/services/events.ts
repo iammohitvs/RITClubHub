@@ -40,3 +40,15 @@ export const getEventsByMonth = async (
         throw new Error();
     }
 };
+
+export const getSpeceficEvent = async (eid: string): Promise<EventType> => {
+    try {
+        const response = await api.get(`/events/event/${eid}`);
+
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+
+        throw new Error();
+    }
+};

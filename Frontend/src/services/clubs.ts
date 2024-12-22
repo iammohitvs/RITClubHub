@@ -13,3 +13,15 @@ export const getAllClubs = async (): Promise<ClubType[]> => {
         throw new Error();
     }
 };
+
+export const getSpeceficClub = async (clubid: string): Promise<ClubType> => {
+    try {
+        const response = await api.get(`/clubs/club/${clubid}`);
+
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+
+        throw new Error();
+    }
+};

@@ -29,7 +29,7 @@ const LongerEventCard = ({
     event: EventType;
 }) => {
     return (
-        <NavLink to={`/clubs/${id}`}>
+        <NavLink to={`/events/event/${id}`}>
             <Card className="bg-zinc-900 max-w-[800px] mx-auto">
                 <CardHeader>
                     <CardTitle className="text-primary">{name}</CardTitle>
