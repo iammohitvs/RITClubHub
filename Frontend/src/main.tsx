@@ -29,6 +29,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthContextProvider } from "./providers/AuthProvider";
 import AuthPage from "./pages/auth/AuthPage";
+import AuthChecker from "./components/AuthChecker";
 
 const queryClient = new QueryClient();
 
@@ -44,10 +45,7 @@ createRoot(document.getElementById("root")!).render(
                                 <Route index element={<HomePage />} />
 
                                 {/* Auth Pages */}
-                                <Route
-                                    path="/auth"
-                                    element={<AuthPage />}
-                                />
+                                <Route path="/auth" element={<AuthPage />} />
                                 <Route
                                     path="/signup/student"
                                     element={<StudentSignup />}
@@ -96,10 +94,12 @@ createRoot(document.getElementById("root")!).render(
                                 </Route>
 
                                 {/* User Pages */}
-                                <Route
-                                    path="profile"
-                                    element={<UserProfilePage />}
-                                />
+                                <Route path="profile" element={<AuthChecker />}>
+                                    <Route
+                                        index
+                                        element={<UserProfilePage />}
+                                    />
+                                </Route>
                             </Route>
                         </Routes>
                     </BrowserRouter>
