@@ -25,3 +25,13 @@ export type ClubType = {
     cemail: string;
     dept: string | null;
 };
+
+export type RegisterType = {
+    id: string;
+    name: string;
+    type: string;
+};
+
+export type LoginType = {
+    token: string;
+};
