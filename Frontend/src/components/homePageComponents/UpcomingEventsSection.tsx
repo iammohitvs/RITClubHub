@@ -16,7 +16,7 @@ import EventCard from "./EventCard";
 
 const UpcomingEventsSection = () => {
     const { data, isLoading, isError } = useQuery({
-        queryKey: ["events"],
+        queryKey: ["events-upcoming"],
         queryFn: async () => await getUpcomingEvents(),
     });
 

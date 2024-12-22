@@ -5,7 +5,7 @@ import LongerEventCard from "@/components/eventsPageComponents/LongerEventCard";
 
 const UpcomingEvents = () => {
     const { data, isLoading, isError } = useQuery({
-        queryKey: ["events"],
+        queryKey: ["events-upcoming"],
         queryFn: async () => await getUpcomingEvents(),
     });
 

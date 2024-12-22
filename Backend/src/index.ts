@@ -16,8 +16,17 @@ import {
   deleteEvent 
 } from './handlers/eventHandler';
 import { createRating, getRatingsForClub, getRatingsForEvent, deleteRatingsByClubOrEvent } from './handlers/ratingHandler';
+import { cors } from "hono/cors";
 
 const app = new Hono();
+
+app.use(
+    "*", // Apply to all routes
+    cors({
+        origin: "http://localhost:5173", // Replace with your Vite client URL
+        allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    })
+);
 
 // Auth routes
 app.post('/api/register', register);
@@ -25,14 +34,14 @@ app.post('/api/login', login);
 
 // Club routes
 app.get('/api/clubs', /*authMiddleware,*/ getAllClubs);
-app.get('/api/clubs/:id', /*authMiddleware,*/ getClubById);
+app.get('/api/clubs/club/:id', /*authMiddleware,*/ getClubById);
 app.post('/api/addclub', /*authMiddleware,*/ addClub);
 app.put('/api/clubs/updateclub', /*authMiddleware,*/ updateClub);
 
 // Event routes
 app.get('/api/events', /*authMiddleware,*/ getAllEvents);
-app.get('/api/events/:id', /*authMiddleware,*/ getEventById);
-app.get('/api/events/:cid', /*authMiddleware,*/ getEventsByClubId);
+app.get('/api/events/event/:id', /*authMiddleware,*/ getEventById);
+app.get('/api/events/cevent/:cid', /*authMiddleware,*/ getEventsByClubId);
 app.get('/api/events/past', /*authMiddleware,*/ getPastEvents);
 app.get('/api/events/future', /*authMiddleware,*/ getFutureEvents);
 app.get('/api/events/calendar', /*authMiddleware,*/ getEventsByMonth);
@@ -42,7 +51,7 @@ app.delete('/api/events/deleteevent', /*authMiddleware,*/ deleteEvent);
 
 // Account routes
 app.get('/api/accounts', /*authMiddleware,*/ getAllAccounts);
-app.get('/api/accounts/:id', /*authMiddleware,*/ getAccountById);
+app.get('/api/accounts/acc/:id', /*authMiddleware,*/ getAccountById);
 app.post('/api/addaccount', /*authMiddleware,*/ addAccount);
 app.put('/api/accounts/updateaccount', /*authMiddleware,*/ updateAccount);
 app.delete('/api/account/deleteaccount', /*authMiddleware,*/ deleteAccount);

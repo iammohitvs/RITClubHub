@@ -48,12 +48,9 @@ export const getEventsByClubId = async (c: Context) => {
 
 // Fetch past events with query for month and year, ordered by recent first
 export const getPastEvents = async (c: Context) => {
-  const month = c.req.query('month');
-  const year = c.req.query('year');
-
   try {
     const pastEvents = await prisma.event.findMany({
-      where: { date: { lt: new Date(`${year}-${month}-01`) } },
+      where: { date: { lt: new Date() } },
       orderBy: { date: 'desc' },
     });
 
@@ -66,27 +63,40 @@ export const getPastEvents = async (c: Context) => {
 // Fetch future events, ordered by earliest first
 export const getFutureEvents = async (c: Context) => {
   try {
-    const futureEvents = await prisma.event.findMany({
-      where: { date: { gt: new Date() } },
-      orderBy: { date: 'asc' },
-    });
+      // Fetch all events from the database
+      const allEvents = await prisma.event.findMany({
+          orderBy: { date: "asc" }, // Sort by date if you want them ordered
+      });
 
-    return c.json(futureEvents);
+      // Filter events to get future events (date greater than current date)
+      const futureEvents = allEvents.filter(
+          (event) => new Date(event.date) > new Date()
+      );
+
+      // Return the future events in the response
+      return c.json(futureEvents);
   } catch (error) {
-    return c.json({ error: 'Error fetching future events' }, 500);
+      // Log the error for debugging
+
+      // Return a more detailed error message
+      return c.json(
+          { error: "Error fetching future events" },
+          500
+      );
   }
 };
 
 // Fetch events in a specific month
 export const getEventsByMonth = async (c: Context) => {
   const month = Number(c.req.query('m'));
+  const year = Number(c.req.query('y'));
 
   try {
     const events = await prisma.event.findMany({
       where: {
         date: {
-          gte: new Date(new Date().getFullYear(), month - 1, 1),
-          lt: new Date(new Date().getFullYear(), month, 1),
+          gte: new Date(year, month - 1, 1),
+          lt: new Date(year, month, 1),
         },
       },
     });
