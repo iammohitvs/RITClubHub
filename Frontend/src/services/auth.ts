@@ -1,16 +1,20 @@
 import api from "@/lib/axiosInstance";
 import { handleAxiosError } from "@/lib/utils";
 
-export const signup = async (username: string, password: string, type:string) => {
+export const signup = async (
+    username: string,
+    password: string,
+    type: string
+) => {
     try {
         const response = await api.post("/register", {
-            username,
+            name: username,
             password,
             type,
         });
 
         try {
-            const res2 = await api.post("/login", { username, password });
+            const res2 = await api.post("/login", { name: username, password });
 
             api.defaults.headers["Authorization"] = `Bearer ${res2.data.token}`;
             return {
@@ -39,7 +43,7 @@ export const signup = async (username: string, password: string, type:string) =>
 
 export const login = async (username: string, password: string) => {
     try {
-        const res2 = await api.post("/login", { username, password });
+        const res2 = await api.post("/login", { name: username, password });
 
         api.defaults.headers["Authorization"] = `Bearer ${res2.data.token}`;
         return {
@@ -55,5 +59,5 @@ export const login = async (username: string, password: string) => {
 
 export const logout = async () => {
     api.defaults.headers["Authorization"] = "Bearer ";
-    return null;
+    return { success: true };
 };
