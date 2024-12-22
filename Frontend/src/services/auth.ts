@@ -61,3 +61,15 @@ export const logout = async () => {
     api.defaults.headers["Authorization"] = "Bearer ";
     return { success: true };
 };
+
+export const isClub = async (name: string): Promise<boolean> => {
+    try {
+        const res2 = await api.get(`/isclub/${name}`);
+
+        return res2.data.isClub;
+    } catch (error) {
+        handleAxiosError(error);
+
+        throw new Error();
+    }
+};

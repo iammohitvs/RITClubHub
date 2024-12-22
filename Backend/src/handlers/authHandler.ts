@@ -33,3 +33,20 @@ export const login = async (c: Context) => {
     });
     return c.json({ token, name: user.name });
 };
+
+export const isClub = async (c: Context) => {
+    const { name } = c.req.param();
+    const account = await prisma.account.findFirst({
+        where: { name },
+    });
+
+    if (!account) {
+        return c.json({ error: "Invalid credentials" }, 401);
+    }
+
+    if (account?.type === "club") {
+        return c.json({ isClub: true });
+    } else {
+        return c.json({ isClub: false });
+    }
+};

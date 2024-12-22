@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "@/providers/AuthProvider";
 import { LogOut } from "lucide-react";
+import CreateClub from "@/components/CreateClub";
 
 const UserProfilePage = () => {
     const { toast } = useToast();
@@ -37,6 +38,8 @@ const UserProfilePage = () => {
             >
                 Logout <LogOut />
             </Button>
+
+            <CreateClub />
         </section>
     );
 };
